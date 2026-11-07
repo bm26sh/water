@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Water Market</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#f4f9ff;
+    color:#222;
+}
+
+header{
+    background:white;
+    padding:20px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #ddd;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#008cff;
+}
+
+button{
+    background:#008cff;
+    color:white;
+    border:0;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+.hero{
+    text-align:center;
+    padding:80px 20px;
+}
+
+.hero h1{
+    font-size:45px;
+}
+
+.hero p{
+    color:#666;
+    font-size:20px;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:25px;
+    padding:40px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 5px 20px #ddd;
+}
+
+.water{
+    height:180px;
+    background:#dff4ff;
+    border-radius:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:50px;
+}
+
+.price{
+    color:#008cff;
+    font-size:24px;
+    font-weight:bold;
+}
+
+footer{
+    text-align:center;
+    padding:30px;
+    color:#777;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<div class="logo">
+💧 Water Market
+</div>
+
+<button>
+관리자
+</button>
+</header>
+
+
+<section class="hero">
+
+<h1>
+깨끗한 물을 가장 쉽게
+</h1>
+
+<p>
+당신에게 필요한 생수를 빠르게 만나보세요.
+</p>
+
+<button>
+상품 보기
+</button>
+
+</section>
+
+
+<section class="products">
+
+
+<div class="card">
+
+<div class="water">
+💧
+</div>
+
+<h2>
+제주 생수
+</h2>
+
+<p>
+500ml × 20병
+</p>
+
+<p class="price">
+10,000원
+</p>
+
+<button>
+주문하기
+</button>
+
+</div>
+
+
+
+<div class="card">
+
+<div class="water">
+💧
+</div>
+
+<h2>
+프리미엄 워터
+</h2>
+
+<p>
+1L × 12병
+</p>
+
+<p class="price">
+15,000원
+</p>
+
+<button>
+주문하기
+</button>
+
+</div>
+
+
+</section>
+
+
+<footer>
+© 2026 Water Market
+</footer>
+
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Water Market 관리자</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f9ff;
+    padding:30px;
+}
+
+.box{
+    max-width:500px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 5px 20px #ddd;
+}
+
+h1{
+    color:#008cff;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border:1px solid #ccc;
+    border-radius:10px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    background:#008cff;
+    color:white;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+#admin{
+    display:none;
+}
+
+.product{
+    margin-top:20px;
+    padding:15px;
+    background:#eef8ff;
+    border-radius:10px;
+}
+</style>
+
+</head>
+
+<body>
+
+
+<div class="box">
+
+<h1>💧 관리자</h1>
+
+
+<div id="login">
+
+<input id="pw" type="password" placeholder="관리자 비밀번호">
+
+<button onclick="login()">
+로그인
+</button>
+
+</div>
+
+
+
+<div id="admin">
+
+<h2>
+상품 추가
+</h2>
+
+<input id="name" placeholder="상품명">
+
+<input id="price" placeholder="가격">
+
+
+<button onclick="addProduct()">
+상품 추가
+</button>
+
+
+<div id="list"></div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+const PASSWORD="1234";
+
+let products=[];
+
+
+function login(){
+
+if(document.getElementById("pw").value===PASSWORD){
+
+document.getElementById("login").style.display="none";
+
+document.getElementById("admin").style.display="block";
+
+}else{
+
+alert("비밀번호 오류");
+
+}
+
+}
+
+
+function addProduct(){
+
+let name=document.getElementById("name").value;
+
+let price=document.getElementById("price").value;
+
+
+products.push({
+name:name,
+price:price
+});
+
+
+show();
+
+}
+
+
+function show(){
+
+let html="";
+
+products.forEach(p=>{
+
+html+=`
+
+<div class="product">
+${p.name}<br>
+${p.price}원
+</div>
+
+`;
+
+});
+
+
+document.getElementById("list").innerHTML=html;
+
+}
+
+</script>
+
+
+</body>
+</html>
