@@ -14,7 +14,7 @@ body{
 }
 
 .box{
-    max-width:500px;
+    max-width:600px;
     margin:auto;
     background:white;
     padding:30px;
@@ -42,6 +42,7 @@ button{
     border:0;
     border-radius:10px;
     cursor:pointer;
+    margin-top:8px;
 }
 
 #admin{
@@ -49,10 +50,14 @@ button{
 }
 
 .product{
-    margin-top:20px;
+    margin-top:15px;
     padding:15px;
     background:#eef8ff;
     border-radius:10px;
+}
+
+.product button{
+    background:#ff4b4b;
 }
 </style>
 
@@ -60,10 +65,9 @@ button{
 
 <body>
 
-
 <div class="box">
 
-<h1>💧 관리자</h1>
+<h1>💧 Water Market 관리자</h1>
 
 
 <div id="login">
@@ -77,16 +81,17 @@ button{
 </div>
 
 
-
 <div id="admin">
 
-<h2>
-상품 추가
-</h2>
+<h2>상품 추가</h2>
 
 <input id="name" placeholder="상품명">
 
+<input id="description" placeholder="설명">
+
 <input id="price" placeholder="가격">
+
+<input id="image" placeholder="이미지(이모지 또는 주소)">
 
 
 <button onclick="addProduct()">
@@ -94,77 +99,165 @@ button{
 </button>
 
 
+<h2>상품 목록</h2>
+
 <div id="list"></div>
 
-</div>
-
 
 </div>
 
 
+</div>
 <script>
 
-const PASSWORD="1234";
+async function login(){
 
-let products=[];
-
-
-function login(){
-
-if(document.getElementById("pw").value===PASSWORD){
-
-document.getElementById("login").style.display="none";
-
-document.getElementById("admin").style.display="block";
-
-}else{
-
-alert("비밀번호 오류");
-
-}
-
-}
+    const password =
+    document.getElementById("pw").value;
 
 
-function addProduct(){
-
-let name=document.getElementById("name").value;
-
-let price=document.getElementById("price").value;
-
-
-products.push({
-name:name,
-price:price
-});
+    const res = await fetch("/api/admin-login",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            password
+        })
+    });
 
 
-show();
+    const data = await res.json();
+
+
+    if(data.success){
+
+        document.getElementById("login").style.display="none";
+
+        document.getElementById("admin").style.display="block";
+
+        loadProducts();
+
+    }else{
+
+        alert("비밀번호 오류");
+
+    }
 
 }
 
 
-function show(){
-
-let html="";
-
-products.forEach(p=>{
-
-html+=`
-
-<div class="product">
-${p.name}<br>
-${p.price}원
-</div>
-
-`;
-
-});
 
 
-document.getElementById("list").innerHTML=html;
+async function loadProducts(){
+
+    const res = await fetch("/api/products");
+
+    const products = await res.json();
+
+
+    let html="";
+
+
+    products.forEach(p=>{
+
+        html+=`
+
+        <div class="product">
+
+        <b>${p.name}</b><br>
+
+        ${p.description}<br>
+
+        ${p.price}원<br>
+
+        ${p.image || ""}
+
+        <button onclick="deleteProduct(${p.id})">
+        삭제
+        </button>
+
+        </div>
+
+        `;
+
+    });
+
+
+    document.getElementById("list").innerHTML=html;
 
 }
+
+
+
+
+
+async function addProduct(){
+
+    await fetch("/api/add-product",{
+
+        method:"POST",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+
+            name:
+            document.getElementById("name").value,
+
+            description:
+            document.getElementById("description").value,
+
+            price:
+            Number(document.getElementById("price").value),
+
+            image:
+            document.getElementById("image").value
+
+        })
+
+    });
+
+
+    alert("상품 추가 완료");
+
+    loadProducts();
+
+}
+
+
+
+
+
+async function deleteProduct(id){
+
+
+    if(!confirm("삭제할까요?")){
+        return;
+    }
+
+
+    await fetch("/api/delete-product",{
+
+        method:"DELETE",
+
+        headers:{
+            "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+            id
+        })
+
+    });
+
+
+    loadProducts();
+
+}
+
 
 </script>
 
