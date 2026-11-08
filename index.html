@@ -200,7 +200,61 @@ function order(product){
 }
 
 </script>
+<script>
+async function loadProducts(){
+
+    try {
+        const res = await fetch("/api/products");
+        const products = await res.json();
+
+        const area = document.querySelector(".products");
+
+        area.innerHTML = "";
+
+        products.forEach(product => {
+
+            area.innerHTML += `
+            <div class="card">
+
+                <div class="water">
+                    ${product.image || "💧"}
+                </div>
+
+                <h2>
+                    ${product.name}
+                </h2>
+
+                <p>
+                    ${product.description}
+                </p>
+
+                <p class="price">
+                    ${Number(product.price).toLocaleString()}원
+                </p>
+
+                <button onclick="order('${product.name}')">
+                    주문하기
+                </button>
+
+            </div>
+            `;
+
+        });
+
+    } catch(error) {
+        console.log("상품 불러오기 실패:", error);
+    }
+
+}
 
 
+function order(name){
+    alert(name + " 주문 기능 준비 중입니다.");
+}
+
+
+loadProducts();
+
+</script>
 </body>
 </html>
