@@ -8,39 +8,22 @@ export default async function handler(req, res) {
 
     const { password } = req.body;
 
-    const url = "https://dyctkkedsunshhtcnfgq.supabase.co/rest/v1/admins?select=id,password_hash";
-
-    const response = await fetch(url, {
-        headers: {
-            apikey: "여기에_Publishable_key",
-            Authorization: "Bearer 여기에_Publishable_key"
-        }
-    });
-
-    const admins = await response.json();
-
-    if (!admins.length) {
-        return res.status(401).json({
-            success:false
-        });
-    }
-
-    const check = await fetch(
+    const response = await fetch(
         "https://dyctkkedsunshhtcnfgq.supabase.co/rest/v1/rpc/check_admin_password",
         {
-            method:"POST",
-            headers:{
-                apikey:"여기에_Publishable_key",
-                Authorization:"Bearer 여기에_Publishable_key",
-                "Content-Type":"application/json"
+            method: "POST",
+            headers: {
+                apikey: "sb_publishable_43tRJ0YbfUYfm0Qjzfy4mQ_vgELAIZF",
+                Authorization: "Bearer sb_publishable_43tRJ0YbfUYfm0Qjzfy4mQ_vgELAIZF",
+                "Content-Type": "application/json"
             },
-            body:JSON.stringify({
-                input_password:password
+            body: JSON.stringify({
+                input_password: password
             })
         }
     );
 
-    const result = await check.json();
+    const result = await response.json();
 
     if(result === true){
         return res.json({
@@ -48,7 +31,7 @@ export default async function handler(req, res) {
         });
     }
 
-    res.status(401).json({
+    return res.status(401).json({
         success:false
     });
 }
